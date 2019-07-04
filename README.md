@@ -11,4 +11,7 @@ Não esqueçam de fazer uma nova branch pra mexer nesta merda.
 > javac parser/\*.java
 
 **Comando para rodar o compilador:**
+> java parser/langX -print_tree exemplos/ex1.x
+
+**E para rodar debugando, tem que adicionar o parâmetro _-debug_AS_**
 > java parser/langX -debug_AS -print_tree exemplos/ex1.x
