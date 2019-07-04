@@ -1,6 +1,6 @@
 1: ListNode (ClassDeclNode)  ===> 2 null
 2: ClassDeclNode ===> oi null 3
-3: ClassBodyNode ===> null 4 null 16
+3: ClassBodyNode ===> null 4 null 24
 4: ListNode (VarDeclNode) ===> 5 8
 5: VarDeclNode ===> int 6
 6: ListNode (VarNode) ===> 7 null
@@ -9,45 +9,53 @@
 9: VarDeclNode ===> abcdegfegjnewl 10
 10: ListNode (VarNode) ===> 11 null
 11: VarNode ===> e 
-12: ListNode (VarDeclNode) ===> 13 null
+12: ListNode (VarDeclNode) ===> 13 16
 13: VarDeclNode ===> float 14
 14: ListNode (VarNode) ===> 15 null
 15: VarNode ===> b 
-16: ListNode (MethodDeclNode) ===> 17 null
-17: MethodDeclNode ===> float oi 18
-18: MethodBodyNode ===> 19 35
-19: ListNode (VarDeclNode) ===> 20 23
-20: VarDeclNode ===> int 21
-21: ListNode (VarNode) ===> 22 null
-22: VarNode ===> a 
-23: ListNode (VarDeclNode) ===> 24 27
-24: VarDeclNode ===> float 25
-25: ListNode (VarNode) ===> 26 null
-26: VarNode ===> b 
+16: ListNode (VarDeclNode) ===> 17 20
+17: VarDeclNode ===> float 18
+18: ListNode (VarNode) ===> 19 null
+19: VarNode ===> b 
+20: ListNode (VarDeclNode) ===> 21 null
+21: VarDeclNode ===> float 22
+22: ListNode (VarNode) ===> 23 null
+23: VarNode ===> c 
+24: ListNode (MethodDeclNode) ===> 25 null
+25: MethodDeclNode ===> float oi 26
+26: MethodBodyNode ===> 27 43
 27: ListNode (VarDeclNode) ===> 28 31
-28: VarDeclNode ===> byte 29
+28: VarDeclNode ===> int 29
 29: ListNode (VarNode) ===> 30 null
-30: VarNode ===> c 
-31: ListNode (VarDeclNode) ===> 32 null
-32: VarDeclNode ===> hfigws 33
+30: VarNode ===> a 
+31: ListNode (VarDeclNode) ===> 32 35
+32: VarDeclNode ===> float 33
 33: ListNode (VarNode) ===> 34 null
-34: VarNode ===> d 
-35: BlockNode ===> 36
-36: ListNode (StatementNode) ===> 37 40
-37: AtribNode ===> 38 39
-38: VarNode ===> e 
-39: FloatConstNode ===> 3.5f
-40: ListNode (StatementNode) ===> 41 44
-41: AtribNode ===> 42 43
-42: VarNode ===> a 
-43: IntConstNode ===> 1
-44: ListNode (StatementNode) ===> 45 null
-45: IfNode ===> 46 49 null
-46: RelationalNode ===> 47 || 48
-47: VarNode ===> a 
-48: VarNode ===> d 
-49: BlockNode ===> 50
-50: ListNode (StatementNode) ===> 51 null
-51: AtribNode ===> 52 53
-52: VarNode ===> b 
-53: FloatConstNode ===> 2.5f
+34: VarNode ===> b 
+35: ListNode (VarDeclNode) ===> 36 39
+36: VarDeclNode ===> byte 37
+37: ListNode (VarNode) ===> 38 null
+38: VarNode ===> c 
+39: ListNode (VarDeclNode) ===> 40 null
+40: VarDeclNode ===> hfigws 41
+41: ListNode (VarNode) ===> 42 null
+42: VarNode ===> d 
+43: BlockNode ===> 44
+44: ListNode (StatementNode) ===> 45 48
+45: AtribNode ===> 46 47
+46: VarNode ===> e 
+47: FloatConstNode ===> 3.5f
+48: ListNode (StatementNode) ===> 49 52
+49: AtribNode ===> 50 51
+50: VarNode ===> a 
+51: IntConstNode ===> 1
+52: ListNode (StatementNode) ===> 53 null
+53: IfNode ===> 54 57 null
+54: RelationalNode ===> 55 || 56
+55: VarNode ===> a 
+56: VarNode ===> d 
+57: BlockNode ===> 58
+58: ListNode (StatementNode) ===> 59 null
+59: AtribNode ===> 60 61
+60: VarNode ===> b 
+61: FloatConstNode ===> 2.5f

@@ -1,7 +1,7 @@
 /*************************************************************************
 Arquivo a ser processado pelo programa JavaCC.
 Contm:
-       - descrio do analisador lxico para a linguagem X++ 
+       - descrio do analisador lxico para a linguagem X++
        - descrio do analisador sinttico para a linguagem X++
        - recuperao de erros sintticos
        - construo da rvore sinttica
@@ -21,7 +21,7 @@ package parser;
 import java.io.*;
 import recovery.*;   // importa as classes de recuperao de erros do AS
 import syntacticTree.*; // importa as classes dos nos da rvore sinttica
- 
+
 
 public class langX {
 final static String Version = "X++ Compiler - Version 1.0 - 2004";
@@ -30,8 +30,8 @@ boolean debug_recovery;   // controla verbose de recuperao de erros
 Token lastError = null;
 
 
-// Define o mtodo "main" da classe langX.  
-  public  static void main(String args[]) throws ParseException 
+// Define o mtodo "main" da classe langX.
+  public  static void main(String args[]) throws ParseException
   {
   boolean debug_as = false;
   boolean debug_recovery = false;
@@ -63,22 +63,22 @@ Token lastError = null;
     }
 
     if (args[i].equals("-"))
-    {       // l da entrada padro      
+    {       // l da entrada padro
         System.out.println("Reading from standard input . . .");
         parser = new langX(System.in); // cria AS
      }
-     else 
+     else
     {       // l do arquivo
-        filename = args[args.length-1];  
+        filename = args[args.length-1];
         System.out.println("Reading from file " + filename + " . . .");
         try {  // cria AS
             parser = new langX(new java.io.FileInputStream(filename));
-        } 
+        }
     catch (java.io.FileNotFoundException e) {
                System.out.println("File " + filename + " not found.");
         return;
         }
-    } 
+    }
 
     ListNode root = null;
     parser.debug_recovery = debug_recovery;
@@ -146,15 +146,15 @@ Token tok;
         if ( g.contains(tok.kind ) ) //achou um token no conjunto
         {
              if ( debug_recovery)
-               System.out.println("     Found syncronizing token: " + 
+               System.out.println("     Found syncronizing token: " +
                                    im(tok.kind));
              break;
         }
         if (debug_recovery)
              System.out.println("     Ignoring token: " + im(tok.kind));
-        getNextToken();     // pega prximo token       
+        getNextToken();     // pega prximo token
         tok = getToken(1);
-        if (tok.kind == EOF && ! g.contains(EOF) ) // fim da entrada?   
+        if (tok.kind == EOF && ! g.contains(EOF) ) // fim da entrada?
             eof = true;
     }
    if ( tok != lastError)
@@ -220,7 +220,7 @@ SKIP :
 
 TOKEN :
 {
-  < BREAK: "break" > 
+  < BREAK: "break" >
 | < CLASS: "class" >
 | < CONSTRUCTOR: "constructor" >
 | < ELSE: "else" >
@@ -259,7 +259,7 @@ TOKEN :
 TOKEN :
 {
   < int_constant:(  // nmeros decimais, octais, hexadecimais ou binrios
-                  (["0"-"9"] (["0"-"9"])* ) | 
+                  (["0"-"9"] (["0"-"9"])* ) |
                   (["0"-"7"] (["0"-"7"])* ["o", "O"] ) |
                   (["0"-"9"] (["0"-"7","A"-"F","a"-"f"])* ["h", "H"] ) |
                   (["0"-"1"] (["0"-"1"])* ["b", "B"])
@@ -270,7 +270,7 @@ TOKEN :
 |
   < null_constant: "null" > // constante null
 |
-  < float_constant: 
+  < float_constant:
   (["0"-"9"])+ "." (["0"-"9"])+ (["f", "F"])
   >
 }
@@ -322,7 +322,7 @@ TOKEN :
 /* Trata os erros lxicos */
 SPECIAL_TOKEN :
 {
-<INVALID_LEXICAL: 
+<INVALID_LEXICAL:
 (~ ["a"-"z", "A"-"Z",
   "0"-"9",
   "\"",
@@ -351,15 +351,15 @@ SPECIAL_TOKEN :
   "\f"
 ])+>
    {
-    System.err.println("Line " + input_stream.getEndLine() + 
+    System.err.println("Line " + input_stream.getEndLine() +
                            " - Invalid string found: " + image);
     countLexError++;
    }
 |
-   <INVALID_CONST: 
+   <INVALID_CONST:
    "\"" (~ ["\n","\r","\""])* ["\n","\r"]>
    {
-    System.err.println("Line " + input_stream.getEndLine() + 
+    System.err.println("Line " + input_stream.getEndLine() +
                            " - String constant has a \\n: " + image);
     countLexError++;
    }
@@ -374,11 +374,11 @@ RecoverySet g = First.program;
 
 ListNode l = null, d = null;
 }
-{ 
+{
     <EOF> {return null;}
 |
 (    l = classlist(g)
-    try { 
+    try {
       <EOF> {return l;}
     }
     catch (ParseException e)
@@ -424,9 +424,9 @@ catch (ParseException e)
 
 ClassBodyNode classbody(RecoverySet g) throws ParseEOFException :
 {
-ListNode c = null, 
-         v = null, 
-         ct = null, 
+ListNode c = null,
+         v = null,
+         ct = null,
          m = null;
 VarDeclNode vd;
 ConstructDeclNode cd;
@@ -442,7 +442,7 @@ RecoverySet f2 = new RecoverySet(SEMICOLON).union(g).remove(IDENT),
 try {
    t = <LBRACE>
       [c = classlist(f5)]
-      (LOOKAHEAD(3) vd = vardecl(f2) <SEMICOLON> 
+      (LOOKAHEAD(3) vd = vardecl(f2) <SEMICOLON>
         { if ( v == null)
               v = new ListNode(vd);
           else
@@ -469,33 +469,33 @@ try {
 catch (ParseException e)
 {
    consumeUntil(g, e, "classbody");
-   return new ClassBodyNode(t, c, v, ct, m); 
+   return new ClassBodyNode(t, c, v, ct, m);
 }
 }
 
 
 VarDeclNode vardecl(RecoverySet g) throws ParseEOFException :
 {
-Token /*q = null, qf = null, */t1 = null, t2; 
+Token q = null, qf = null, t1 = null, t2;
 int k = 0;
-ListNode l = null; 
+ListNode l = null;
 }
 {
 try {
-//    [ q = <PUBLIC> | <PRIVATE> | <PROTECTED> ]
-//    [ qf = <FINAL> ]
+    [ q = <PUBLIC> | <PRIVATE> | <PROTECTED> ]
+    [ qf = <FINAL> ]
    ( t1 = <INT> |  t1 = <STRING> | t1 = <BYTE> | t1 = <SHORT> | t1 = <LONG> | t1 = <FLOAT> | t1 = <IDENT>)
    t2 = <IDENT> ( <LBRACKET> <RBRACKET> { k++; } )*
      { l = new ListNode(new VarNode(t2, k)); }
-   (<COMMA> { k = 0; }  t2 = <IDENT> ( <LBRACKET> <RBRACKET> { k++; })* 
+   (<COMMA> { k = 0; }  t2 = <IDENT> ( <LBRACKET> <RBRACKET> { k++; })*
      { l.add(new VarNode(t2, k)); }
    )*
-  { return new VarDeclNode(/*q, qf, */t1, l); }
+  { return new VarDeclNode(q, qf, t1, l); }
 }
 catch (ParseException e)
 {
    consumeUntil(g, e, "vardecl");
-   return new VarDeclNode(/*q, qf, */t1, l);
+   return new VarDeclNode(q, qf, t1, l);
 }
 }
 
@@ -526,7 +526,7 @@ MethodBodyNode m = null;
 }
 {
 try {
-    ( t1 = <INT> |  t1 = <STRING> | t1 = <BYTE> | t1 = <SHORT> | t1 = <LONG> | t1 = <FLOAT> | t1 = <IDENT>) 
+    ( t1 = <INT> |  t1 = <STRING> | t1 = <BYTE> | t1 = <SHORT> | t1 = <LONG> | t1 = <FLOAT> | t1 = <IDENT>)
    (<LBRACKET> <RBRACKET> { k++; } )*
    t2 = <IDENT> m = methodbody(g)
       { return new MethodDeclNode(t1, k, t2, m); }
@@ -568,19 +568,19 @@ Token t2 = null;
 {
 try {
    [
-    ( t1 = <INT> |  t1 = <STRING> | t1 = <BYTE> | t1 = <SHORT> | t1 = <LONG> | t1 = <FLOAT> | t1 = <IDENT>) t2 = <IDENT> 
+    ( t1 = <INT> |  t1 = <STRING> | t1 = <BYTE> | t1 = <SHORT> | t1 = <LONG> | t1 = <FLOAT> | t1 = <IDENT>) t2 = <IDENT>
     (<LBRACKET> <RBRACKET> { k++; } )*
-       { 
+       {
          q = new ListNode(new VarNode(t2, k));
      p = new ListNode(new VarDeclNode(t1, q));
        }
-    (   <COMMA> {k = 0;}  ( t1 = <INT> |  t1 = <STRING> | t1 = <BYTE> | t1 = <SHORT> | t1 = <LONG> | t1 = <FLOAT> | t1 = <IDENT>) 
+    (   <COMMA> {k = 0;}  ( t1 = <INT> |  t1 = <STRING> | t1 = <BYTE> | t1 = <SHORT> | t1 = <LONG> | t1 = <FLOAT> | t1 = <IDENT>)
         t2= <IDENT> (<LBRACKET> <RBRACKET> {k ++;} )*
        {
          q = new ListNode(new VarNode(t2, k));
          p.add(new VarDeclNode(t1, q));
-       } 
-    )*    
+       }
+    )*
    ] { return p;}
 }
 catch (ParseException e)
@@ -606,12 +606,12 @@ try {
 
 (
     LOOKAHEAD(<IDENT> <IDENT>)
-    s = vardecl(f1) <SEMICOLON> 
+    s = vardecl(f1) <SEMICOLON>
 |
     LOOKAHEAD(1)
     s = atribstat(f1) <SEMICOLON>
 |
-    s = vardecl(f1) <SEMICOLON> 
+    s = vardecl(f1) <SEMICOLON>
 |
     s = printstat(f1) <SEMICOLON>
 |
@@ -649,8 +649,8 @@ RecoverySet f1 = new RecoverySet(ASSIGN).union(g);
 }
 {
 try {
-    e1 = lvalue(f1) t1 = <ASSIGN> 
-    ( e2 = alocexpression(g) | e2 = expression(g)) 
+    e1 = lvalue(f1) t1 = <ASSIGN>
+    ( e2 = alocexpression(g) | e2 = expression(g))
     { return new AtribNode(t1, e1, e2); }
 }
 catch (ParseException e)
@@ -685,7 +685,7 @@ Token t = null;
 {
 try {
     t = <READ> e1 = lvalue(g)
-      { return new ReadNode(t, e1); } 
+      { return new ReadNode(t, e1); }
 }
 catch (ParseException e)
 {
@@ -807,8 +807,8 @@ ListNode l = null;
 try {
    t1 = <IDENT> { e1 = new VarNode(t1); }
    (
-       t1 = <LBRACKET> e2 = expression(null) <RBRACKET> 
-         { e1 = new IndexNode(t1, e1, e2); } 
+       t1 = <LBRACKET> e2 = expression(null) <RBRACKET>
+         { e1 = new IndexNode(t1, e1, e2); }
    |
        LOOKAHEAD(3)
        t1 = <DOT> t2 = <IDENT> <LPAREN> l = arglist(null) <RPAREN>
@@ -839,10 +839,10 @@ RecoverySet f1 = new RecoverySet(RPAREN).union(g),
             f2 = new RecoverySet(RBRACKET).union(g);
 }
 {
-    t1 = <NEW> 
-    ( 
+    t1 = <NEW>
+    (
       LOOKAHEAD(2) t2 = <IDENT> <LPAREN> l = arglist(f1) <RPAREN>
-         { e1 = new NewObjectNode(t1, t2, l); } 
+         { e1 = new NewObjectNode(t1, t2, l); }
 |
       ( t2 = <INT> | t2 = <STRING> | t2 = <IDENT> | t2 = <BYTE> | t2 = <SHORT> | t2 = <LONG> | t2 = <FLOAT> )
       (<LBRACKET> e2 = expression(f2) <RBRACKET>
@@ -867,14 +867,14 @@ Token t = null;
 }
 {
 try {
-    e1 = numexpr() 
+    e1 = numexpr()
     [
       ( t = <LT> | t = <GT> | t = <LE> | t = <GE> | t = <EQ> | t = <NEQ> | t = <AND> | t = <OR> | t = <XOR> | t = <NOT> )
       e2 = numexpr()
         { e1 = new RelationalNode(t, e1, e2); }
-    ] 
+    ]
     { return e1; }
-} 
+}
 catch (ParseException e)
 {
    consumeUntil(g, e, "expression");
@@ -889,9 +889,9 @@ ExpreNode e1 = null, e2;
 Token t;
 }
 {
-    e1 = term() 
+    e1 = term()
     (
-       (t = <PLUS> | t = <MINUS>) 
+       (t = <PLUS> | t = <MINUS>)
        e2 = term()
          { e1 = new AddNode(t, e1, e2); }
     )*
@@ -904,9 +904,9 @@ ExpreNode e1 = null, e2;
 Token t;
 }
 {
-    e1 = unaryexpr() 
+    e1 = unaryexpr()
     (
-       ( t = <STAR> | t = <SLASH>| t = <REM>) 
+       ( t = <STAR> | t = <SLASH>| t = <REM>)
        e2 = unaryexpr()
          { e1 = new MultNode(t, e1, e2); }
     )*
@@ -929,17 +929,17 @@ ExpreNode factor() throws ParseEOFException :
 ExpreNode e = null;
 Token t;
 }
-{    
-    ( 
+{
+    (
        t = <int_constant> { e = new IntConstNode(t); }
-    | 
+    |
        t = <string_constant> { e = new StringConstNode(t); }
-    | 
+    |
        t = <null_constant> { e = new NullConstNode(t); }
     |
        t = <float_constant> { e = new FloatConstNode(t); }
     |
-       e = lvalue(null) 
+       e = lvalue(null)
     |
        <LPAREN> e = expression(null) <RPAREN>
     )
@@ -955,7 +955,7 @@ RecoverySet f =  new RecoverySet(COMMA).union(g);
 }
 {
     [
-       e = expression(f) 
+       e = expression(f)
           { l = new ListNode(e); }
        (<COMMA> e = expression(f)
           { l.add(e);}
